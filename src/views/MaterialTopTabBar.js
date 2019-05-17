@@ -148,12 +148,12 @@ export default class TabBarTop extends React.PureComponent<Props> {
 
     return (
       <TabBar
-        {...rest}
         activeColor={activeTintColor}
         inactiveColor={inactiveTintColor}
         navigationState={navigation.state}
         renderIcon={this._renderIcon}
         renderLabel={this._renderLabel}
+        {...rest}
       />
     );
   }
