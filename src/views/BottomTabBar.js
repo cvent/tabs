@@ -9,7 +9,10 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { SafeAreaView } from '@react-navigation/native';
+import {
+  getStatusBarHeight,
+  getBottomSpace,
+} from 'react-native-iphone-x-helper';
 
 import CrossFadeIcon from './CrossFadeIcon';
 import withDimensions from '../utils/withDimensions';
@@ -66,6 +69,8 @@ const isIos = Platform.OS === 'ios';
 const isIOS11 = majorVersion >= 11 && isIos;
 
 const DEFAULT_MAX_TAB_ITEM_WIDTH = 125;
+const DEFAULT_HEIGHT = 49;
+const COMPACT_HEIGHT = 29;
 
 class TouchableWithoutFeedbackWrapper extends React.Component<*> {
   render() {
@@ -314,6 +319,7 @@ class TabBarBottom extends React.Component<Props, State> {
       inactiveBackgroundColor,
       onTabPress,
       onTabLongPress,
+      isLandscape,
       safeAreaInset,
       style,
       tabStyle,
@@ -321,18 +327,80 @@ class TabBarBottom extends React.Component<Props, State> {
 
     const { routes } = navigation.state;
 
+    const {
+      position,
+      top,
+      left = 0,
+      bottom = 0,
+      right = 0,
+      margin,
+      marginTop,
+      marginLeft,
+      marginBottom,
+      marginRight,
+      marginHorizontal,
+      marginVertical,
+      ...innerStyle
+    } = StyleSheet.flatten(style || {});
+
+    const containerStyle = {
+      position,
+      top,
+      left,
+      bottom,
+      right,
+      margin,
+      marginTop,
+      marginLeft,
+      marginBottom,
+      marginRight,
+      marginHorizontal,
+      marginVertical,
+    };
+
+    const statusBarHeight = getStatusBarHeight(true);
+    const horizontalInset = isLandscape ? statusBarHeight : 0;
+    const insets = {
+      bottom:
+        typeof safeAreaInset?.bottom === 'number'
+          ? safeAreaInset.bottom
+          : safeAreaInset?.bottom === 'never'
+          ? 0
+          : getBottomSpace(),
+      left:
+        typeof safeAreaInset?.left === 'number'
+          ? safeAreaInset.left
+          : safeAreaInset?.left === 'never'
+          ? 0
+          : horizontalInset,
+      right:
+        typeof safeAreaInset?.right === 'number'
+          ? safeAreaInset.right
+          : safeAreaInset?.right === 'never'
+          ? 0
+          : horizontalInset,
+    };
+
     const tabBarStyle = [
       styles.tabBar,
-      this._shouldUseHorizontalLabels() && !Platform.isPad
-        ? styles.tabBarCompact
-        : styles.tabBarRegular,
-      style,
+      innerStyle,
+      {
+        height:
+          // @ts-ignore: isPad exists in runtime but not available in type defs
+          (this._shouldUseHorizontalLabels() && !Platform.isPad
+            ? COMPACT_HEIGHT
+            : DEFAULT_HEIGHT) + insets.bottom,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+      },
     ];
 
     return (
       <Animated.View
         style={[
           styles.container,
+          containerStyle,
           keyboardHidesTabBar
             ? // eslint-disable-next-line react-native/no-inline-styles
               {
@@ -355,8 +423,9 @@ class TabBarBottom extends React.Component<Props, State> {
           keyboardHidesTabBar && this.state.keyboard ? 'none' : 'auto'
         }
         onLayout={this._handleLayout}
+
       >
-        <SafeAreaView style={tabBarStyle} forceInset={safeAreaInset}>
+        <View style={tabBarStyle}>
           {routes.map((route, index) => {
             const focused = index === navigation.state.index;
             const scene = { route, focused };
@@ -405,14 +474,11 @@ class TabBarBottom extends React.Component<Props, State> {
               </ButtonComponent>
             );
           })}
-        </SafeAreaView>
+        </View>
       </Animated.View>
     );
   }
 }
-
-const DEFAULT_HEIGHT = 49;
-const COMPACT_HEIGHT = 29;
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -422,16 +488,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   container: {
-    left: 0,
-    right: 0,
-    bottom: 0,
     elevation: 8,
-  },
-  tabBarCompact: {
-    height: COMPACT_HEIGHT,
-  },
-  tabBarRegular: {
-    height: DEFAULT_HEIGHT,
   },
   tab: {
     flex: 1,
@@ -469,3 +526,4 @@ const styles = StyleSheet.create({
 });
 
 export default withDimensions(TabBarBottom);
+
