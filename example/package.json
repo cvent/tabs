@@ -23,7 +23,7 @@
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-preset-expo": "^5.1.1",
-    "glob-to-regexp": "^0.4.0"
+    "glob-to-regexp": "^0.4.1"
   },
   "resolutions": {
     "**/@expo/vector-icons": "10.0.1",
