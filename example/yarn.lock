@@ -1042,10 +1042,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@expo/vector-icons@10.0.1", "@expo/vector-icons@^10.0.1", "@expo/vector-icons@~9.0.0":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.0.1.tgz#dbb0a9ab68b53aa6cbbc04b48421e4db862535d9"
-  integrity sha512-24m39O2aO2G67VlQOlUHxGr/qYhfuYNJewpSSSUSxZ+3nznfp5fzN0aHPaFXuxCCyJiF49QkbBiXKHAGZWhVJA==
+"@expo/vector-icons@^10.2.1", "@expo/vector-icons@~9.0.0":
+  version "10.2.1"
+  resolved "https://nexus.core.cvent.org/nexus/repository/npm-public/@expo/vector-icons/-/vector-icons-10.2.1.tgz#47fb2fa12d7ad601835babde6bd3ddea7f6fde89"
+  integrity sha512-clYQZFLeU2y23n03hXg18EEsZS5c73sJJnfderztfSAqkUXkfUtv07fwuprYwbHIvgFkw6L7R6xJOCVYtS85iQ==
   dependencies:
     lodash "^4.17.4"
 
