@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^7.5.0",
-    "@expo/vector-icons": "^10.0.1",
+    "@expo/vector-icons": "^10.2.1",
     "babel-jest": "^24.5.0",
     "commitlint": "^7.5.2",
     "conventional-changelog-cli": "^2.0.12",
