@@ -46,7 +46,7 @@
     "@expo/vector-icons": "^10.0.1",
     "babel-jest": "^24.5.0",
     "commitlint": "^7.5.2",
-    "conventional-changelog-cli": "^2.0.12",
+    "conventional-changelog-cli": "^2.2.2",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.2.2",
